@@ -26,7 +26,7 @@ document.getElementById('stopButton').addEventListener('click', function() {
 });
 
 document.getElementById('githubButton').addEventListener('click', function() {
-    window.open('https://github.com/Team-ToyoTech', '_blank');
+    window.open('https://github.com/meozigoon/skkoa-web-compiler', '_blank');
 });
 
 let tabs = [];
@@ -53,6 +53,15 @@ function setActiveTab(id) {
 function renderTabs() {
     const tabBar = document.getElementById('tabBar');
     tabBar.innerHTML = '';
+    // 코드: 줄 번호 영역의 실제 너비만큼 탭바에 margin-left 적용
+    const linenumDiv = document.getElementById('editorLinenum');
+    if (linenumDiv) {
+        // getBoundingClientRect로 실제 표시 너비를 구함
+        const linenumRect = linenumDiv.getBoundingClientRect();
+        tabBar.style.marginLeft = linenumRect.width + 'px';
+    } else {
+        tabBar.style.marginLeft = '';
+    }
     tabs.forEach(tab => {
         const tabEl = document.createElement('div');
         tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '');
