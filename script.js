@@ -34,7 +34,7 @@ let tabs = [];
 let activeTabId = null;
 let isDirty = false;
 
-function createTab(filename = 'untitled', content = '') {
+function createTab(filename = 'untitled', content = 'Hello, World!') {
     filename = filename.replace(/\.[^/.]+$/, '');
     if (!filename.endsWith('.koa')) filename += '.koa';
     const id = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
@@ -384,7 +384,7 @@ fontsizeInput.addEventListener('keydown', function(e) {
 
 window.addEventListener('DOMContentLoaded', () => {
     updateLineNumbers();
-    if (tabs.length === 0) createTab('untitled1', '');
+    if (tabs.length === 0) createTab('untitled1');
 });
 
 window.addEventListener('beforeunload', function(e) {
