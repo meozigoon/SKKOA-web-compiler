@@ -4,9 +4,9 @@ document.getElementById('runButton').addEventListener('click', function() {
 document.getElementById('saveButton').addEventListener('click', function() {
     const code = document.querySelector('.code-input').value;
     let filename = document.getElementById('filenameInput').value.trim();
-    if (filename === '') filename = 'untitled1';
+    // 항상 .koa 확장자만 사용
     filename = filename.replace(/\.[^/.]+$/, '');
-    filename += '.txt';
+    filename += '.koa';
 
     const blob = new Blob([code], {type: 'text/plain'});
     const url = URL.createObjectURL(blob);
@@ -34,6 +34,9 @@ let activeTabId = null;
 let isDirty = false; // 추가: 더티 플래그
 
 function createTab(filename = 'untitled', content = '') {
+    // 항상 .koa 확장자만 사용
+    filename = filename.replace(/\.[^/.]+$/, '');
+    if (!filename.endsWith('.koa')) filename += '.koa';
     const id = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
     tabs.push({ id, filename, content });
     setActiveTab(id);
@@ -45,7 +48,10 @@ function setActiveTab(id) {
     const tab = tabs.find(t => t.id === id);
     if (tab) {
         document.querySelector('.code-input').value = tab.content;
-        document.getElementById('filenameInput').value = tab.filename;
+        // 항상 .koa 확장자만 표시
+        let fname = tab.filename.replace(/\.[^/.]+$/, '');
+        if (!fname.endsWith('.koa')) fname += '.koa';
+        document.getElementById('filenameInput').value = fname;
     }
     renderTabs();
 }
@@ -76,7 +82,10 @@ function renderTabs() {
                 // 인라인 입력창으로 변경 (배경 검정, 텍스트 흰색, 기존 박스 스타일 제거)
                 const input = document.createElement('input');
                 input.type = 'text';
-                input.value = tab.filename;
+                // .koa 확장자 제거 후 표시
+                let baseName = tab.filename.replace(/\.[^/.]+$/, '');
+                if (baseName.endsWith('.koa')) baseName = baseName.slice(0, -4);
+                input.value = baseName;
                 input.style.background = '#000';
                 input.style.color = '#fff';
                 input.style.border = 'none';
@@ -94,12 +103,13 @@ function renderTabs() {
                         let newName = input.value.trim() || 'untitled';
                         // 중복 방지
                         let base = newName, num = 1;
-                        while (tabs.some(t => t.filename === newName && t.id !== tab.id)) {
-                            newName = base + '_' + num;
+                        let finalName = base;
+                        while (tabs.some(t => t.filename === finalName + '.koa' && t.id !== tab.id)) {
+                            finalName = base + '_' + num;
                             num++;
                         }
-                        tab.filename = newName;
-                        document.getElementById('filenameInput').value = newName;
+                        tab.filename = finalName + '.koa';
+                        document.getElementById('filenameInput').value = finalName + '.koa';
                         renderTabs();
                     } else if (ev.key === 'Escape') {
                         renderTabs();
@@ -132,7 +142,7 @@ function renderTabs() {
             let untitledNum = 1;
             let name;
             do {
-                name = 'untitled' + untitledNum;
+                name = 'untitled' + untitledNum + '.koa';
                 untitledNum++;
             } while (tabs.some(t => t.filename === name));
             createTab(name, '');
@@ -227,7 +237,12 @@ codeInput.addEventListener('keyup', updateLineNumbers);
 codeInput.addEventListener('select', updateLineNumbers);
 filenameInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
-    if (tab) tab.filename = filenameInput.value;
+    if (tab) {
+        let fname = filenameInput.value.trim().replace(/\.[^/.]+$/, '');
+        if (!fname.endsWith('.koa')) fname += '.koa';
+        tab.filename = fname;
+        document.getElementById('filenameInput').value = fname;
+    }
     renderTabs();
     isDirty = true; // 탭 이름 변경 시 더티 플래그 설정
 });
@@ -236,7 +251,7 @@ const openFileMenu = document.getElementById('openFileMenu');
 openFileMenu.addEventListener('click', function() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.txt,.html,.js,.css,.json,.md,.py,.java,.c,.cpp,.ts,.tsx,.jsx,.csv,.xml,.yml,.yaml,.sh,.bat,.php,.rb,.go,.rs,.swift,.kt,.dart,.sql,.ini,.conf,.log,.env,.cfg,.pl,.lua,.r,.ipynb,.h,.hpp,.m,.mm,.vb,.cs,.asp,.jsp,.vue,.svelte,.scss,.less,.styl,.lock,.gitignore,.dockerfile,.makefile,.gradle,.pom,.toml,.lock,.properties,.config,.rc,.editorconfig,.babelrc,.eslintrc,.prettierrc,.npmrc,.yarnrc';
+    input.accept = '.koa'; // .koa 파일만 열기
     input.style.display = 'none';
     document.body.appendChild(input);
     input.addEventListener('change', function(e) {
@@ -244,7 +259,10 @@ openFileMenu.addEventListener('click', function() {
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(evt) {
-            createTab(file.name.replace(/\.[^/.]+$/, ''), evt.target.result);
+            // 항상 .koa 확장자만 사용
+            let fname = file.name.replace(/\.[^/.]+$/, '');
+            if (!fname.endsWith('.koa')) fname += '.koa';
+            createTab(fname, evt.target.result);
         };
         reader.readAsText(file);
     });
@@ -257,7 +275,7 @@ newFileMenu.addEventListener('click', function() {
     let untitledNum = 1;
     let name;
     do {
-        name = 'untitled' + untitledNum;
+        name = 'untitled' + untitledNum + '.koa';
         untitledNum++;
     } while (tabs.some(t => t.filename === name));
     createTab(name, '');
@@ -268,7 +286,7 @@ tabAddBtn.addEventListener('click', function() {
     let untitledNum = 1;
     let name;
     do {
-        name = 'untitled' + untitledNum;
+        name = 'untitled' + untitledNum + '.koa';
         untitledNum++;
     } while (tabs.some(t => t.filename === name));
     createTab(name, '');
