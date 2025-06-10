@@ -9,9 +9,12 @@
 <body>
     <div class="editor-root">
         <header class="editor-topbar">
-            <span class="lang-badge">HTML</span>
+            <div class="left-header">
+                <span class="lang-badge">HTML</span>
+                <input type="text" id="filenameInput" class="filename-input" value="untitled1" maxlength="30" autocomplete="off" />
+            </div>
             <div class="editor-actions">
-                <!-- 실행 버튼 (밝은 파랑) -->
+                <!-- 실행 버튼 -->
                 <button class="icon-btn" id="runButton" aria-label="실행">
                     <svg width="26" height="26" viewBox="0 0 26 26">
                         <circle cx="13" cy="13" r="12" fill="#262a41" stroke="#4e73fa" stroke-width="2"/>
@@ -19,7 +22,7 @@
                     </svg>
                     <span class="tooltip">실행</span>
                 </button>
-                <!-- 저장 버튼 (밝은 초록) -->
+                <!-- 저장 버튼 -->
                 <button class="icon-btn" id="saveButton" aria-label="저장">
                     <svg width="26" height="26" viewBox="0 0 26 26">
                         <rect x="3" y="3" width="20" height="20" rx="5" fill="#232635" stroke="#22c55e" stroke-width="2"/>
@@ -28,7 +31,7 @@
                     </svg>
                     <span class="tooltip">저장</span>
                 </button>
-                <!-- 정지 버튼 (밝은 빨강) -->
+                <!-- 정지 버튼 -->
                 <button class="icon-btn" id="stopButton" aria-label="정지">
                     <svg width="26" height="26" viewBox="0 0 26 26">
                         <circle cx="13" cy="13" r="12" fill="#262a41" stroke="#ef4444" stroke-width="2"/>
@@ -36,7 +39,7 @@
                     </svg>
                     <span class="tooltip">정지</span>
                 </button>
-                <!-- 깃허브 버튼 (흰색/검정 고대비) -->
+                <!-- 깃허브 버튼 -->
                 <button class="icon-btn" id="githubButton" aria-label="GitHub">
                     <svg width="26" height="26" viewBox="0 0 26 26">
                         <circle cx="13" cy="13" r="12" fill="#14151e" stroke="#fff" stroke-width="2"/>
