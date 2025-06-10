@@ -209,11 +209,9 @@ function updateLineNumbers() {
         activeLine = uptoCursor.split('\n').length;
     }
     for (let i = 1; i <= lines; i++) {
-        if (i === activeLine) {
-            nums += `<div style='color:#fff;font-weight:bold;display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
-        } else {
-            nums += `<div style='display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
-        }
+        let lineClass = '';
+        if (i === activeLine) lineClass = 'active-linenum active-linenum-border';
+        nums += `<div class="${lineClass}" style='display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
     }
     linenumLayer.innerHTML = nums;
     // 스크롤 동기화
@@ -394,5 +392,18 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('beforeunload', function(e) {
     if (isDirty) {
         e.preventDefault();
+    }
+});
+
+codeInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        const value = this.value;
+        this.value = value.substring(0, start) + '    ' + value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 4;
+        updateLineNumbers();
+        isDirty = true;
     }
 });
