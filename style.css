@@ -294,7 +294,7 @@ body {
 .tab-bar {
     display: flex;
     align-items: flex-end;
-    background: #181926;
+    background: #23263a; /* 탭 왼쪽 빈칸 색상 변경 */
     border-bottom: 1.5px solid #23263a;
     padding: 0 8px 0 16px;
     height: 32px;
