@@ -31,3 +31,32 @@ document.getElementById('stopButton').addEventListener('click', function() {
 document.getElementById('githubButton').addEventListener('click', function() {
     window.open('https://github.com/', '_blank');
 });
+
+// Open File 기능
+const openFileMenu = document.getElementById('openFileMenu');
+openFileMenu.addEventListener('click', function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt,.html,.js,.css,.json,.md,.py,.java,.c,.cpp,.ts,.tsx,.jsx,.csv,.xml,.yml,.yaml,.sh,.bat,.php,.rb,.go,.rs,.swift,.kt,.dart,.sql,.ini,.conf,.log,.env,.cfg,.pl,.lua,.r,.ipynb,.h,.hpp,.m,.mm,.vb,.cs,.asp,.jsp,.vue,.svelte,.scss,.less,.styl,.lock,.gitignore,.dockerfile,.makefile,.gradle,.pom,.toml,.lock,.properties,.config,.rc,.editorconfig,.babelrc,.eslintrc,.prettierrc,.npmrc,.yarnrc,.pnpmfile,.pnpm-lock,.pnpm-workspace,.pnpm-workspace.yaml,.pnpm-workspace.yml,.pnpm-workspace.json,.pnpm-workspace.js,.pnpm-workspace.cjs,.pnpm-workspace.mjs,.pnpm-workspace.ts,.pnpm-workspace.tsx,.pnpm-workspace.jsx,.pnpm-workspace.vue,.pnpm-workspace.svelte,.pnpm-workspace.scss,.pnpm-workspace.less,.pnpm-workspace.styl,.pnpm-workspace.lock,.pnpm-workspace.gitignore,.pnpm-workspace.dockerfile,.pnpm-workspace.makefile,.pnpm-workspace.gradle,.pnpm-workspace.pom,.pnpm-workspace.toml,.pnpm-workspace.lock,.pnpm-workspace.properties,.pnpm-workspace.config,.pnpm-workspace.rc,.pnpm-workspace.editorconfig,.pnpm-workspace.babelrc,.pnpm-workspace.eslintrc,.pnpm-workspace.prettierrc,.pnpm-workspace.npmrc,.pnpm-workspace.yarnrc';
+    input.style.display = 'none';
+    document.body.appendChild(input);
+    input.addEventListener('change', function(e) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            document.querySelector('.code-input').value = evt.target.result;
+            document.getElementById('filenameInput').value = file.name.replace(/\.[^/.]+$/, '');
+        };
+        reader.readAsText(file);
+    });
+    input.click();
+    setTimeout(() => document.body.removeChild(input), 1000);
+});
+
+// New File 기능
+const newFileMenu = document.getElementById('newFileMenu');
+newFileMenu.addEventListener('click', function() {
+    document.querySelector('.code-input').value = '';
+    document.getElementById('filenameInput').value = 'untitled1';
+});

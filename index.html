@@ -1,58 +1,155 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>온라인 코드 에디터</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="editor-root">
-        <header class="editor-topbar">
-            <div class="left-header">
-                <span class="lang-badge">HTML</span>
-                <input type="text" id="filenameInput" class="filename-input" value="untitled1" maxlength="30" autocomplete="off" />
+    <head>
+        <meta charset="UTF-8" />
+        <title>온라인 코드 에디터</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="layout-root">
+            <nav class="side-menu">
+                <div class="menu-title">MENU</div>
+                <ul class="menu-list">
+                    <li id="openFileMenu">Open File</li>
+                    <li id="newFileMenu">New File</li>
+                    <li>Settings</li>
+                    <li>Help</li>
+                </ul>
+            </nav>
+            <div class="editor-area">
+                <header class="editor-toolbar">
+                    <div class="toolbar-left">
+                        <span class="lang-badge">HTML</span>
+                        <input
+                            type="text"
+                            id="filenameInput"
+                            class="filename-input"
+                            value="untitled1"
+                            maxlength="30"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div class="editor-actions">
+                        <!-- 실행 버튼 -->
+                        <button
+                            class="icon-btn"
+                            id="runButton"
+                            aria-label="실행"
+                        >
+                            <svg width="26" height="26" viewBox="0 0 26 26">
+                                <circle
+                                    cx="13"
+                                    cy="13"
+                                    r="12"
+                                    fill="#262a41"
+                                    stroke="#4e73fa"
+                                    stroke-width="2"
+                                />
+                                <polygon
+                                    points="11,8 19,13 11,18"
+                                    fill="#4e73fa"
+                                />
+                            </svg>
+                            <span class="tooltip">Run</span>
+                        </button>
+                        <!-- 저장 버튼 -->
+                        <button
+                            class="icon-btn"
+                            id="saveButton"
+                            aria-label="저장"
+                        >
+                            <svg width="26" height="26" viewBox="0 0 26 26">
+                                <rect
+                                    x="3"
+                                    y="3"
+                                    width="20"
+                                    height="20"
+                                    rx="5"
+                                    fill="#232635"
+                                    stroke="#22c55e"
+                                    stroke-width="2"
+                                />
+                                <rect
+                                    x="9"
+                                    y="12"
+                                    width="8"
+                                    height="5"
+                                    rx="1"
+                                    fill="#22c55e"
+                                />
+                                <rect
+                                    x="11"
+                                    y="7"
+                                    width="4"
+                                    height="3"
+                                    rx="1"
+                                    fill="#fff"
+                                />
+                            </svg>
+                            <span class="tooltip">Save</span>
+                        </button>
+                        <!-- 정지 버튼 -->
+                        <button
+                            class="icon-btn"
+                            id="stopButton"
+                            aria-label="정지"
+                        >
+                            <svg width="26" height="26" viewBox="0 0 26 26">
+                                <circle
+                                    cx="13"
+                                    cy="13"
+                                    r="12"
+                                    fill="#262a41"
+                                    stroke="#ef4444"
+                                    stroke-width="2"
+                                />
+                                <rect
+                                    x="9"
+                                    y="9"
+                                    width="8"
+                                    height="8"
+                                    rx="2"
+                                    fill="#ef4444"
+                                />
+                            </svg>
+                            <span class="tooltip">Stop</span>
+                        </button>
+                        <button
+                            class="icon-btn"
+                            id="githubButton"
+                            aria-label="GitHub"
+                        >
+                            <svg width="26" height="26" viewBox="0 0 26 26">
+                                <circle
+                                    cx="13"
+                                    cy="13"
+                                    r="12"
+                                    fill="#14151e"
+                                    stroke="#fff"
+                                    stroke-width="2"
+                                />
+                                <path
+                                    fill="#fff"
+                                    d="M13 7.5c-3.6 0-6.5 2.9-6.5 6.4 0 2.8 1.7 5.1 4.1 6 .3.1.4-.1.4-.3v-1.1c-1.6.3-1.9-.7-1.9-.7-.3-.6-.6-.8-.6-.8-.6-.4 0-.4.1-.4.7.1 1 .6 1.1.9.6 1 1.5.7 1.8.5.1-.5.2-.7.4-.9-1.3-.2-2.7-.7-2.7-2.9 0-.6.2-1.1.5-1.5-.1-.1-.2-.6.1-1.2 0 0 .5-.2 1.6.6.4-.1.9-.2 1.4-.2s1 .1 1.4.2c1.1-.8 1.6-.6 1.6-.6.3.6.1 1.1.1 1.2.3.4.5.9.5 1.5 0 2.2-1.4 2.7-2.7 2.9.2.2.5.6.5 1.2v1.6c0 .2.1.4.4.3 2.4-.8 4.1-3.1 4.1-6C19.5 10.4 16.6 7.5 13 7.5z"
+                                />
+                            </svg>
+                            <span class="tooltip">GitHub</span>
+                        </button>
+                    </div>
+                </header>
+                <main class="editor-main">
+                    <textarea
+                        class="code-input"
+                        spellcheck="false"
+                        placeholder="Write your HTML code here"
+                    ></textarea>
+                </main>
             </div>
-            <div class="editor-actions">
-                <!-- 실행 버튼 -->
-                <button class="icon-btn" id="runButton" aria-label="실행">
-                    <svg width="26" height="26" viewBox="0 0 26 26">
-                        <circle cx="13" cy="13" r="12" fill="#262a41" stroke="#4e73fa" stroke-width="2"/>
-                        <polygon points="11,8 19,13 11,18" fill="#4e73fa"/>
-                    </svg>
-                    <span class="tooltip">실행</span>
-                </button>
-                <!-- 저장 버튼 -->
-                <button class="icon-btn" id="saveButton" aria-label="저장">
-                    <svg width="26" height="26" viewBox="0 0 26 26">
-                        <rect x="3" y="3" width="20" height="20" rx="5" fill="#232635" stroke="#22c55e" stroke-width="2"/>
-                        <rect x="9" y="12" width="8" height="5" rx="1" fill="#22c55e"/>
-                        <rect x="11" y="7" width="4" height="3" rx="1" fill="#fff"/>
-                    </svg>
-                    <span class="tooltip">저장</span>
-                </button>
-                <!-- 정지 버튼 -->
-                <button class="icon-btn" id="stopButton" aria-label="정지">
-                    <svg width="26" height="26" viewBox="0 0 26 26">
-                        <circle cx="13" cy="13" r="12" fill="#262a41" stroke="#ef4444" stroke-width="2"/>
-                        <rect x="9" y="9" width="8" height="8" rx="2" fill="#ef4444"/>
-                    </svg>
-                    <span class="tooltip">정지</span>
-                </button>
-                <!-- 깃허브 버튼 -->
-                <button class="icon-btn" id="githubButton" aria-label="GitHub">
-                    <svg width="26" height="26" viewBox="0 0 26 26">
-                        <circle cx="13" cy="13" r="12" fill="#14151e" stroke="#fff" stroke-width="2"/>
-                        <path fill="#fff" d="M13 7.5c-3.6 0-6.5 2.9-6.5 6.4 0 2.8 1.7 5.1 4.1 6 .3.1.4-.1.4-.3v-1.1c-1.6.3-1.9-.7-1.9-.7-.3-.6-.6-.8-.6-.8-.6-.4 0-.4.1-.4.7.1 1 .6 1.1.9.6 1 1.5.7 1.8.5.1-.5.2-.7.4-.9-1.3-.2-2.7-.7-2.7-2.9 0-.6.2-1.1.5-1.5-.1-.1-.2-.6.1-1.2 0 0 .5-.2 1.6.6.4-.1.9-.2 1.4-.2s1 .1 1.4.2c1.1-.8 1.6-.6 1.6-.6.3.6.1 1.1.1 1.2.3.4.5.9.5 1.5 0 2.2-1.4 2.7-2.7 2.9.2.2.5.6.5 1.2v1.6c0 .2.1.4.4.3 2.4-.8 4.1-3.1 4.1-6C19.5 10.4 16.6 7.5 13 7.5z"/>
-                    </svg>
-                    <span class="tooltip">GitHub</span>
-                </button>
-            </div>
-        </header>
-        <main>
-            <textarea class="code-input" spellcheck="false" placeholder="여기에 HTML 코드를 입력하세요"></textarea>
-        </main>
-    </div>
-    <script src="script.js"></script>
-</body>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
