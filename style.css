@@ -294,7 +294,7 @@ body {
 .tab-bar {
     display: flex;
     align-items: flex-end;
-    background: #23263a; /* 탭 왼쪽 빈칸 색상 변경 */
+    background: #181926;
     border-bottom: 1.5px solid #23263a;
     padding: 0 8px 0 16px;
     height: 32px;
@@ -304,6 +304,14 @@ body {
     overflow-y: hidden;
     position: relative;
     z-index: 10;
+}
+
+.tab-bar::after {
+    content: '';
+    flex: 1 1 auto;
+    background: #181926;
+    height: 100%;
+    display: block;
 }
 
 .tab {
@@ -536,4 +544,10 @@ body.bg-purple .editor-linenum {
 
 #fontsizeToggleBtn:hover, #tabsizeToggleBtn:hover {
     background: #4e73fa;
+}
+
+.editor-area,
+.editor-main,
+.editor-linenum-wrap {
+    background: #181926 !important;
 }
