@@ -72,6 +72,25 @@ function renderTabs() {
         tabEl.onclick = () => setActiveTab(tab.id);
         tabBar.appendChild(tabEl);
     });
+    // + 버튼을 탭바의 마지막에 추가
+    let addBtn = document.getElementById('tabAddBtn');
+    if (!addBtn) {
+        addBtn = document.createElement('button');
+        addBtn.id = 'tabAddBtn';
+        addBtn.className = 'tab-add-btn';
+        addBtn.title = 'New Tab';
+        addBtn.textContent = '+';
+        addBtn.onclick = function() {
+            let untitledNum = 1;
+            let name;
+            do {
+                name = 'untitled' + untitledNum;
+                untitledNum++;
+            } while (tabs.some(t => t.filename === name));
+            createTab(name, '');
+        };
+    }
+    tabBar.appendChild(addBtn);
 }
 
 function closeTab(id) {
