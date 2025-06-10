@@ -103,16 +103,16 @@ body {
 
 .menu-list li {
     color: #fff !important;
-    font-size: 16px;
-    padding: 10px 0 10px 14px;
-    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
     cursor: pointer;
-    transition: color 0.2s;
-    font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Malgun Gothic', '맑은 고딕', monospace;
+    padding: 8px 16px;
+    border-radius: 8px;
 }
 
 .menu-list li:hover {
     color: #fbbf24 !important;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
 }
 
 .editor-area {
