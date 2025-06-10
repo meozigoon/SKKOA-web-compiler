@@ -31,6 +31,7 @@ document.getElementById('githubButton').addEventListener('click', function() {
 
 let tabs = [];
 let activeTabId = null;
+let isDirty = false; // 추가: 더티 플래그
 
 function createTab(filename = 'untitled', content = '') {
     const id = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
@@ -153,11 +154,21 @@ function updateLineNumbers() {
     const linenumDiv = document.getElementById('editorLinenum');
     if (!textarea || !linenumDiv) return;
     const lines = textarea.value.split('\n').length;
+    // 커서 위치 줄 계산
+    let activeLine = 1;
+    if (typeof textarea.selectionStart === 'number') {
+        const uptoCursor = textarea.value.slice(0, textarea.selectionStart);
+        activeLine = uptoCursor.split('\n').length;
+    }
     let nums = '';
     for (let i = 1; i <= lines; i++) {
-        nums += i + '\n';
+        if (i === activeLine) {
+            nums += `<span class='active-linenum'>${i}</span>\n`;
+        } else {
+            nums += i + '\n';
+        }
     }
-    linenumDiv.textContent = nums;
+    linenumDiv.innerHTML = nums;
 }
 
 const codeInput = document.querySelector('.code-input');
@@ -165,14 +176,19 @@ codeInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
     if (tab) tab.content = codeInput.value;
     updateLineNumbers();
+    isDirty = true; // 코드 입력 시 더티 플래그 설정
 });
 codeInput.addEventListener('scroll', function() {
     document.getElementById('editorLinenum').scrollTop = codeInput.scrollTop;
 });
+codeInput.addEventListener('click', updateLineNumbers);
+codeInput.addEventListener('keyup', updateLineNumbers);
+codeInput.addEventListener('select', updateLineNumbers);
 filenameInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
     if (tab) tab.filename = filenameInput.value;
     renderTabs();
+    isDirty = true; // 탭 이름 변경 시 더티 플래그 설정
 });
 
 const openFileMenu = document.getElementById('openFileMenu');
@@ -228,7 +244,46 @@ document.getElementById('menuToggleBtn').addEventListener('click', function() {
     }
 });
 
+// Settings(설정) 모달 열기/닫기 및 배경색 변경
+const settingsMenu = document.getElementById('settingsMenu');
+const settingsModal = document.getElementById('settingsModal');
+const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+const bgRadios = document.getElementsByName('bgcolor');
+
+settingsMenu.addEventListener('click', function() {
+    settingsModal.style.display = 'flex';
+    // 현재 배경색에 맞게 라디오 체크
+    const body = document.body;
+    let val = 'default';
+    if (body.classList.contains('bg-white')) val = 'white';
+    else if (body.classList.contains('bg-purple')) val = 'purple';
+    for (const r of bgRadios) r.checked = (r.value === val);
+});
+settingsCloseBtn.addEventListener('click', function() {
+    settingsModal.style.display = 'none';
+});
+settingsModal.addEventListener('click', function(e) {
+    if (e.target === settingsModal) settingsModal.style.display = 'none';
+});
+
+for (const radio of bgRadios) {
+    radio.addEventListener('change', function() {
+        document.body.classList.remove('bg-white', 'bg-purple');
+        if (this.value === 'white') document.body.classList.add('bg-white');
+        else if (this.value === 'purple') document.body.classList.add('bg-purple');
+        // 기본은 아무 클래스도 없음
+    });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     updateLineNumbers();
     if (tabs.length === 0) createTab('untitled1', '');
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (isDirty) {
+        e.preventDefault();
+        e.returnValue = '만약 변경 사항이 있는데 페이지 새로 고침 되거나 탭이 닫히면 종료하시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.';
+        return e.returnValue;
+    }
 });

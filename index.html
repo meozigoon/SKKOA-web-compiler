@@ -33,7 +33,7 @@
                 <ul class="menu-list">
                     <li id="openFileMenu">Open File</li>
                     <li id="newFileMenu">New File</li>
-                    <li>Settings</li>
+                    <li id="settingsMenu">Settings</li>
                     <li>Help</li>
                 </ul>
             </nav>
@@ -179,6 +179,39 @@
                         ></textarea>
                     </div>
                 </main>
+            </div>
+        </div>
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="settings-modal" style="display: none">
+            <div class="settings-modal-content">
+                <h2>Settings</h2>
+                <div class="settings-group">
+                    <label>Background Color:</label>
+                    <div class="settings-bg-options">
+                        <label
+                            ><input type="radio" name="bgcolor" value="white" />
+                            White</label
+                        >
+                        <label
+                            ><input
+                                type="radio"
+                                name="bgcolor"
+                                value="default"
+                                checked
+                            />
+                            Default</label
+                        >
+                        <label
+                            ><input
+                                type="radio"
+                                name="bgcolor"
+                                value="purple"
+                            />
+                            Purple</label
+                        >
+                    </div>
+                </div>
+                <button id="settingsCloseBtn">Close</button>
             </div>
         </div>
         <script src="script.js"></script>

@@ -180,7 +180,7 @@ body {
     background: #181926;
     color: #6c738a;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    font-size: 17px; /* 코드 입력과 동일하게 */
+    font-size: 14px; /* 줄번호도 동일하게 맞춤 */
     text-align: right;
     padding: 28px 8px 28px 0;
     user-select: none;
@@ -191,6 +191,11 @@ body {
     height: 100%;
 }
 
+.editor-linenum .active-linenum {
+    color: #fff;
+    background: none;
+}
+
 .code-input {
     width: 100%;
     height: 100%;
@@ -199,7 +204,7 @@ body {
     border: none;
     outline: none;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    font-size: 17px;
+    font-size: 14px; /* 기존 17px에서 14px로 줄임 */
     line-height: 1.6;
     padding: 28px 30px;
     background: #121212 !important;
@@ -254,6 +259,7 @@ body {
     height: 32px;
     min-width: 32px;
     min-height: 32px;
+    z-index: 20;
 }
 
 .icon-btn svg {
@@ -277,7 +283,7 @@ body {
     transition: opacity 0.18s;
     white-space: nowrap;
     font-family: 'Segoe UI', 'Fira Mono', monospace;
-    z-index: 3;
+    z-index: 99999; /* z-index를 크게 설정하여 항상 맨 앞으로 */
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
@@ -402,4 +408,93 @@ body {
     color: #4e73fa;
 }
 
+/* 설정 모달 스타일 */
+.settings-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(20,21,30,0.45);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.settings-modal-content {
+    background: #181926;
+    color: #fff;
+    border-radius: 14px;
+    padding: 32px 38px 24px 38px;
+    min-width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+}
+.settings-modal-content h2 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #4e73fa;
+}
+.settings-group {
+    margin-bottom: 18px;
+}
+.settings-bg-options label {
+    margin-right: 18px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#settingsCloseBtn {
+    background: #4e73fa;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 7px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.15s;
+}
+#settingsCloseBtn:hover {
+    background: #23263a;
+}
+
 /* 탭바와 에디터 영역 연결 */
+
+body.bg-white {
+    background: #fff !important;
+}
+body.bg-white .editor-area,
+body.bg-white .editor-main,
+body.bg-white .editor-linenum-wrap {
+    background: #fff !important;
+}
+body.bg-white .code-input {
+    background: #fff !important;
+    color: #23263a;
+}
+body.bg-white .editor-linenum {
+    background: #f3f4fa;
+    color: #bfc6e0;
+}
+
+body.bg-purple {
+    background: #2d1e4f !important;
+}
+body.bg-purple .editor-area,
+body.bg-purple .editor-main,
+body.bg-purple .editor-linenum-wrap {
+    background: #2d1e4f !important;
+}
+body.bg-purple .code-input {
+    background: #2d1e4f !important;
+    color: #f5eaff;
+}
+body.bg-purple .editor-linenum {
+    background: #3a2566;
+    color: #bfaaff;
+}
+
+.tab-bar, .tab, .tab-add-btn {
+    z-index: 10;
+}
