@@ -137,6 +137,18 @@ newFileMenu.addEventListener('click', function() {
     createTab(name, '');
 });
 
+// + 버튼으로 새 탭 추가
+const tabAddBtn = document.getElementById('tabAddBtn');
+tabAddBtn.addEventListener('click', function() {
+    let untitledNum = 1;
+    let name;
+    do {
+        name = 'untitled' + untitledNum;
+        untitledNum++;
+    } while (tabs.some(t => t.filename === name));
+    createTab(name, '');
+});
+
 // 최초 탭 생성
 window.addEventListener('DOMContentLoaded', () => {
     if (tabs.length === 0) createTab('untitled1', '');

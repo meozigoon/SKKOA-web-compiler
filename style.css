@@ -208,7 +208,7 @@ body {
     align-items: flex-end;
     background: #181926;
     border-bottom: 1.5px solid #23263a;
-    padding: 0 16px;
+    padding: 0 8px 0 16px;
     height: 38px;
     min-height: 38px;
     gap: 2px;
@@ -253,6 +253,31 @@ body {
 
 .tab .close-btn:hover {
     color: #ef4444;
+}
+
+.tab-add-btn {
+    background: #23263a;
+    color: #bfc6e0;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    width: 36px;
+    height: 32px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-left: 2px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    position: relative;
+    top: 2px;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-add-btn:hover {
+    background: #161829;
+    color: #4e73fa;
 }
 
 .toyotech-logo {
