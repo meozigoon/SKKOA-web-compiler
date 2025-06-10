@@ -512,7 +512,7 @@ body.bg-purple .editor-linenum {
     z-index: 10;
 }
 
-#fontsizeInput {
+#fontsizeInput, #tabsizeInput {
     width: 60px;
     font-size: 15px;
     padding: 3px 7px;
@@ -523,7 +523,7 @@ body.bg-purple .editor-linenum {
     margin-right: 6px;
 }
 
-#fontsizeToggleBtn {
+#fontsizeToggleBtn, #tabsizeToggleBtn {
     background: #393a55;
     color: #fff;
     border: none;
@@ -534,6 +534,6 @@ body.bg-purple .editor-linenum {
     transition: background 0.15s;
 }
 
-#fontsizeToggleBtn:hover {
+#fontsizeToggleBtn:hover, #tabsizeToggleBtn:hover {
     background: #4e73fa;
 }
