@@ -406,3 +406,14 @@ codeInput.addEventListener('keydown', function(e) {
         isDirty = true;
     }
 });
+
+document.getElementById('settingsToolbarBtn').addEventListener('click', function() {
+    document.getElementById('settingsModal').style.display = 'flex';
+});
+
+document.getElementById('runMenu').addEventListener('click', function() {
+});
+document.getElementById('stopMenu').addEventListener('click', function() {
+});
+document.getElementById('saveMenu').addEventListener('click', function() {
+});
