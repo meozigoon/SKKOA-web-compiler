@@ -577,8 +577,36 @@ body.bg-purple .editor-linenum {
     outline: none;
     transition: background 0.2s, color 0.2s;
 }
+
 #runMenu:hover, #stopMenu:hover, #saveMenu:hover {
     background: #232635;
     color: #fff;
     border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+    background: #232323;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 0;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #111;
+}
+
+::-webkit-scrollbar-track {
+    background: #232323;
+    border-radius: 0;
+    border: none;
+}
+
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #444 #232323;
 }
