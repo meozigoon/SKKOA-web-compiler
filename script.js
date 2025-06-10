@@ -4,7 +4,6 @@ document.getElementById('runButton').addEventListener('click', function() {
 document.getElementById('saveButton').addEventListener('click', function() {
     const code = document.querySelector('.code-input').value;
     let filename = document.getElementById('filenameInput').value.trim();
-    // 항상 .koa 확장자만 사용
     filename = filename.replace(/\.[^/.]+$/, '');
     filename += '.koa';
 
@@ -31,10 +30,9 @@ document.getElementById('githubButton').addEventListener('click', function() {
 
 let tabs = [];
 let activeTabId = null;
-let isDirty = false; // 추가: 더티 플래그
+let isDirty = false;
 
 function createTab(filename = 'untitled', content = '') {
-    // 항상 .koa 확장자만 사용
     filename = filename.replace(/\.[^/.]+$/, '');
     if (!filename.endsWith('.koa')) filename += '.koa';
     const id = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
@@ -48,7 +46,6 @@ function setActiveTab(id) {
     const tab = tabs.find(t => t.id === id);
     if (tab) {
         document.querySelector('.code-input').value = tab.content;
-        // 항상 .koa 확장자만 표시
         let fname = tab.filename.replace(/\.[^/.]+$/, '');
         if (!fname.endsWith('.koa')) fname += '.koa';
         document.getElementById('filenameInput').value = fname;
@@ -59,10 +56,8 @@ function setActiveTab(id) {
 function renderTabs() {
     const tabBar = document.getElementById('tabBar');
     tabBar.innerHTML = '';
-    // 코드: 줄 번호 영역의 실제 너비만큼 탭바에 margin-left 적용
     const linenumDiv = document.getElementById('editorLinenum');
     if (linenumDiv) {
-        // getBoundingClientRect로 실제 표시 너비를 구함
         const linenumRect = linenumDiv.getBoundingClientRect();
         tabBar.style.marginLeft = linenumRect.width + 'px';
     } else {
@@ -71,7 +66,6 @@ function renderTabs() {
     tabs.forEach(tab => {
         const tabEl = document.createElement('div');
         tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '');
-        // 탭 이름 영역
         const nameSpan = document.createElement('span');
         nameSpan.textContent = tab.filename;
         nameSpan.style.flex = '1';
@@ -79,10 +73,8 @@ function renderTabs() {
             nameSpan.style.cursor = 'pointer';
             nameSpan.onclick = (e) => {
                 e.stopPropagation();
-                // 인라인 입력창으로 변경 (배경 검정, 텍스트 흰색, 기존 박스 스타일 제거)
                 const input = document.createElement('input');
                 input.type = 'text';
-                // .koa 확장자 제거 후 표시
                 let baseName = tab.filename.replace(/\.[^/.]+$/, '');
                 if (baseName.endsWith('.koa')) baseName = baseName.slice(0, -4);
                 input.value = baseName;
@@ -101,7 +93,6 @@ function renderTabs() {
                 input.onblur = input.onkeydown = function(ev) {
                     if (ev.type === 'blur' || ev.key === 'Enter') {
                         let newName = input.value.trim() || 'untitled';
-                        // 중복 방지
                         let base = newName, num = 1;
                         let finalName = base;
                         while (tabs.some(t => t.filename === finalName + '.koa' && t.id !== tab.id)) {
@@ -118,7 +109,6 @@ function renderTabs() {
             };
         }
         tabEl.appendChild(nameSpan);
-        // 닫기 버튼
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close-btn';
         closeBtn.innerHTML = '&times;';
@@ -130,7 +120,6 @@ function renderTabs() {
         tabEl.onclick = () => setActiveTab(tab.id);
         tabBar.appendChild(tabEl);
     });
-    // + 버튼을 탭바의 마지막에 추가
     let addBtn = document.getElementById('tabAddBtn');
     if (!addBtn) {
         addBtn = document.createElement('button');
@@ -167,11 +156,9 @@ function closeTab(id) {
     }
 }
 
-// 줄 번호 표시 기능 (줄 번호를 textarea 내부에 가상으로 표시)
 function updateLineNumbers() {
     const textarea = document.querySelector('.code-input');
     if (!textarea) return;
-    // 줄 번호를 위한 배경 레이어가 없으면 생성
     let linenumLayer = textarea.parentElement.querySelector('.linenum-layer');
     if (!linenumLayer) {
         linenumLayer = document.createElement('div');
@@ -180,12 +167,12 @@ function updateLineNumbers() {
         linenumLayer.style.left = '0';
         linenumLayer.style.top = '0';
         linenumLayer.style.bottom = '0';
-        linenumLayer.style.width = '36px'; // 더 좁은 줄 번호 영역 너비
+        linenumLayer.style.width = '36px';
         linenumLayer.style.overflow = 'hidden';
         linenumLayer.style.background = 'transparent';
         linenumLayer.style.color = '#888';
         linenumLayer.style.textAlign = 'right';
-        linenumLayer.style.padding = '2px 4px 2px 0'; // 오른쪽 4px로 코드와 거의 붙게
+        linenumLayer.style.padding = '2px 4px 2px 0';
         linenumLayer.style.pointerEvents = 'none';
         linenumLayer.style.userSelect = 'none';
         linenumLayer.style.lineHeight = window.getComputedStyle(textarea).lineHeight;
@@ -194,13 +181,12 @@ function updateLineNumbers() {
         textarea.parentElement.insertBefore(linenumLayer, textarea);
         textarea.style.position = 'relative';
         textarea.style.zIndex = '3';
-        textarea.style.paddingLeft = '22px'; // 줄 번호 영역과 정확히 일치
+        textarea.style.paddingLeft = '22px';
         textarea.style.paddingTop = '2px';
         textarea.style.paddingBottom = '2px';
         textarea.style.paddingRight = '0';
         textarea.style.margin = '0';
     }
-    // 줄 번호 생성
     const lines = textarea.value.split('\n').length;
     let nums = '';
     let activeLine = 1;
@@ -214,7 +200,6 @@ function updateLineNumbers() {
         nums += `<div class="${lineClass}" style='display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
     }
     linenumLayer.innerHTML = nums;
-    // 스크롤 동기화
     linenumLayer.scrollTop = textarea.scrollTop;
     linenumLayer.style.height = textarea.clientHeight + 'px';
 }
@@ -224,7 +209,7 @@ codeInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
     if (tab) tab.content = codeInput.value;
     updateLineNumbers();
-    isDirty = true; // 코드 입력 시 더티 플래그 설정
+    isDirty = true;
 });
 codeInput.addEventListener('scroll', function() {
     const linenumLayer = codeInput.parentElement.querySelector('.linenum-layer');
@@ -242,7 +227,7 @@ filenameInput.addEventListener('input', () => {
         document.getElementById('filenameInput').value = fname;
     }
     renderTabs();
-    isDirty = true; // 탭 이름 변경 시 더티 플래그 설정
+    isDirty = true;
 });
 
 const openFileMenu = document.getElementById('openFileMenu');
@@ -254,7 +239,7 @@ if (openFileToolbarBtn) openFileToolbarBtn.addEventListener('click', openFileHan
 function openFileHandler() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.koa'; // .koa 파일만 열기
+    input.accept = '.koa';
     input.style.display = 'none';
     document.body.appendChild(input);
     input.addEventListener('change', function(e) {
@@ -262,7 +247,6 @@ function openFileHandler() {
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(evt) {
-            // 항상 .koa 확장자만 사용
             let fname = file.name.replace(/\.[^/.]+$/, '');
             if (!fname.endsWith('.koa')) fname += '.koa';
             createTab(fname, evt.target.result);
@@ -306,14 +290,11 @@ document.getElementById('menuToggleBtn').addEventListener('click', function() {
     }
 });
 
-// Settings(설정) 모달 열기/닫기 및 배경색 변경
 const settingsMenu = document.getElementById('settingsMenu');
 const settingsModal = document.getElementById('settingsModal');
-// close 버튼 삭제, x 버튼 생성
 let settingsCloseBtn = document.getElementById('settingsCloseBtn');
 if (settingsCloseBtn) settingsCloseBtn.remove();
 
-// x 버튼 생성 및 스타일 적용
 const closeX = document.createElement('button');
 closeX.innerHTML = '&times;';
 closeX.setAttribute('aria-label', 'Close');
@@ -336,17 +317,27 @@ const bgRadios = document.getElementsByName('bgcolor');
 const fontRadios = document.getElementsByName('fontsize');
 const fontsizeInput = document.getElementById('fontsizeInput');
 const fontsizeToggleBtn = document.getElementById('fontsizeToggleBtn');
+let tabSize = 4;
+
+const tabsizeInput = document.getElementById('tabsizeInput');
+if (tabsizeInput) {
+    tabsizeInput.value = tabSize;
+    tabsizeInput.addEventListener('change', function() {
+        let val = parseInt(tabsizeInput.value, 10);
+        if (isNaN(val) || val < 1 || val > 8) val = 4;
+        tabSize = val;
+        tabsizeInput.value = tabSize;
+    });
+}
 
 settingsMenu.addEventListener('click', function() {
     settingsModal.style.display = 'flex';
-    // 현재 배경색에 맞게 라디오 체크
     const body = document.body;
     let val = 'default';
     if (body.classList.contains('bg-white')) val = 'white';
     else if (body.classList.contains('bg-purple')) val = 'purple';
     for (const r of bgRadios) r.checked = (r.value === val);
 
-    // 현재 코드 입력창 폰트 크기 반영
     const codeInput = document.querySelector('.code-input');
     let curFont = codeInput ? codeInput.style.fontSize.replace('px','') : '14';
     if (!curFont) curFont = window.getComputedStyle(codeInput).fontSize.replace('px','');
@@ -361,7 +352,6 @@ for (const radio of bgRadios) {
         document.body.classList.remove('bg-white', 'bg-purple');
         if (this.value === 'white') document.body.classList.add('bg-white');
         else if (this.value === 'purple') document.body.classList.add('bg-purple');
-        // 기본은 아무 클래스도 없음
     });
 }
 
@@ -401,8 +391,9 @@ codeInput.addEventListener('keydown', function(e) {
         const start = this.selectionStart;
         const end = this.selectionEnd;
         const value = this.value;
-        this.value = value.substring(0, start) + '    ' + value.substring(end);
-        this.selectionStart = this.selectionEnd = start + 4;
+        const spaces = ' '.repeat(tabSize);
+        this.value = value.substring(0, start) + spaces + value.substring(end);
+        this.selectionStart = this.selectionEnd = start + tabSize;
         updateLineNumbers();
         isDirty = true;
     }

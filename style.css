@@ -52,7 +52,7 @@ body {
     align-items: center;
     width: 36px;
     height: 36px;
-    margin-left: -8px; /* 더 왼쪽으로 이동 */
+    margin-left: -8px;
     padding: 0;
     outline: none;
 }
@@ -127,7 +127,7 @@ body {
 .editor-toolbar {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* 왼쪽 정렬 */
+    justify-content: flex-start;
     padding: 0 36px;
     background: #161829;
     border-bottom: 2px solid #24273a;
@@ -149,7 +149,7 @@ body {
     align-items: center;
     gap: 8px;
     justify-content: flex-start;
-    margin-left: 8px; /* SKKOA 텍스트와 버튼 사이 약간의 여백 */
+    margin-left: 8px;
 }
 
 .filename-input {
@@ -164,7 +164,6 @@ body {
     min-height: 0;
     background: #121212;
     border-radius: 0 0 18px 18px;
-    /* 탭과 에디터 연결 */
     border-top: none;
 }
 
@@ -180,13 +179,13 @@ body {
     background: #181926;
     color: #6c738a;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    font-size: 14px; /* 줄번호도 동일하게 맞춤 */
+    font-size: 14px;
     text-align: right;
     padding: 28px 8px 28px 0;
     user-select: none;
     min-width: 36px;
     border-radius: 0 0 0 18px;
-    line-height: 1.6; /* 코드 입력과 동일하게 */
+    line-height: 1.6;
     white-space: pre;
     height: 100%;
 }
@@ -204,7 +203,7 @@ body {
     border: none;
     outline: none;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
-    font-size: 14px; /* 기존 17px에서 14px로 줄임 */
+    font-size: 14px;
     line-height: 1.6;
     padding: 28px 30px;
     background: #121212 !important;
@@ -212,7 +211,6 @@ body {
     box-sizing: border-box;
     border-radius: 0 0 18px 0;
     flex: 1;
-    /* 왼쪽 줄번호 영역만큼 여백 */
     margin-left: 0;
 }
 
@@ -221,11 +219,11 @@ body {
 }
 
 .lang-badge {
-    font-size: 14px; /* 기존 17px → 14px */
+    font-size: 14px;
     font-weight: 600;
     color: #fff;
     letter-spacing: 2px;
-    padding: 3px 12px; /* 패딩 축소 */
+    padding: 3px 12px;
     background: #1e2130;
     border-radius: 8px;
     border: 1.2px solid #393a55;
@@ -240,8 +238,8 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 8px; /* gap을 줄임 */
-    justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+    gap: 8px;
+    justify-content: flex-start;
 }
 
 .icon-btn {
@@ -249,7 +247,7 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 50%;
-    padding: 4px; /* 기존 8px → 4px */
+    padding: 4px;
     display: flex;
     align-items: center;
     transition: box-shadow 0.18s, transform 0.13s;
@@ -275,11 +273,11 @@ body {
     font-size: 14px;
     padding: 7px 18px;
     border-radius: 9px;
-    position: absolute; /* fixed → absolute로 변경 */
+    position: absolute;
     left: 50%;
-    top: 100%; /* 버튼 바로 아래 */
+    top: 100%;
     bottom: auto;
-    transform: translateX(-50%) translateY(8px); /* 버튼 아래로 8px 띄움 */
+    transform: translateX(-50%) translateY(8px);
     pointer-events: none;
     transition: opacity 0.18s;
     white-space: nowrap;
@@ -299,12 +297,11 @@ body {
     background: #181926;
     border-bottom: 1.5px solid #23263a;
     padding: 0 8px 0 16px;
-    height: 32px; /* 탭바 높이도 살짝 줄임 */
+    height: 32px;
     min-height: 32px;
     gap: 2px;
     overflow-x: auto;
-    overflow-y: hidden; /* 추가: 세로 스크롤 방지 */
-    /* 탭과 에디터 연결 */
+    overflow-y: hidden;
     position: relative;
     z-index: 10;
 }
@@ -314,9 +311,9 @@ body {
     align-items: center;
     background: #121212;
     color: #bfc6e0;
-    font-size: 13px; /* 탭 폰트 사이즈 축소 */
-    padding: 0 12px; /* 패딩 축소 */
-    height: 26px; /* 탭 높이 축소 */
+    font-size: 13px;
+    padding: 0 12px;
+    height: 26px;
     border-radius: 8px 8px 0 0;
     margin-right: 4px;
     cursor: pointer;
@@ -409,7 +406,6 @@ body {
     color: #4e73fa;
 }
 
-/* 설정 모달 스타일 */
 .settings-modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -419,6 +415,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .settings-modal-content {
     background: #181926;
     color: #fff;
@@ -431,25 +428,30 @@ body {
     gap: 18px;
     align-items: flex-start;
 }
+
 .settings-modal-content h2 {
     margin: 0 0 10px 0;
     font-size: 22px;
     font-weight: bold;
     color: #4e73fa;
 }
+
 .settings-group {
     margin-bottom: 18px;
 }
+
 .settings-bg-options label {
     margin-right: 18px;
     font-size: 16px;
     cursor: pointer;
 }
+
 .settings-fontsize-options label {
     margin-right: 18px;
     font-size: 16px;
     cursor: pointer;
 }
+
 #settingsCloseBtn {
     background: #4e73fa;
     color: #fff;
@@ -461,24 +463,26 @@ body {
     margin-top: 10px;
     transition: background 0.15s;
 }
+
 #settingsCloseBtn:hover {
     background: #23263a;
 }
 
-/* 탭바와 에디터 영역 연결 */
-
 body.bg-white {
     background: #fff !important;
 }
+
 body.bg-white .editor-area,
 body.bg-white .editor-main,
 body.bg-white .editor-linenum-wrap {
     background: #fff !important;
 }
+
 body.bg-white .code-input {
     background: #fff !important;
     color: #23263a;
 }
+
 body.bg-white .editor-linenum {
     background: #f3f4fa;
     color: #bfc6e0;
@@ -487,15 +491,18 @@ body.bg-white .editor-linenum {
 body.bg-purple {
     background: #2d1e4f !important;
 }
+
 body.bg-purple .editor-area,
 body.bg-purple .editor-main,
 body.bg-purple .editor-linenum-wrap {
     background: #2d1e4f !important;
 }
+
 body.bg-purple .code-input {
     background: #2d1e4f !important;
     color: #f5eaff;
 }
+
 body.bg-purple .editor-linenum {
     background: #3a2566;
     color: #bfaaff;
@@ -515,6 +522,7 @@ body.bg-purple .editor-linenum {
     color: #fff;
     margin-right: 6px;
 }
+
 #fontsizeToggleBtn {
     background: #393a55;
     color: #fff;
@@ -525,6 +533,7 @@ body.bg-purple .editor-linenum {
     cursor: pointer;
     transition: background 0.15s;
 }
+
 #fontsizeToggleBtn:hover {
     background: #4e73fa;
 }

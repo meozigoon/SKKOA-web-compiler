@@ -189,7 +189,6 @@
                         autocomplete="off"
                     />
                 </header>
-                <!-- 탭 영역 추가 -->
                 <div class="tab-bar" id="tabBar"></div>
                 <button class="tab-add-btn" id="tabAddBtn" title="New Tab">
                     +
@@ -206,7 +205,6 @@
                 </main>
             </div>
         </div>
-        <!-- Settings Modal -->
         <div id="settingsModal" class="settings-modal" style="display: none">
             <div class="settings-modal-content">
                 <h2>Settings</h2>
@@ -250,6 +248,18 @@
                     <button id="fontsizeToggleBtn" style="margin-left: 10px">
                         Apply
                     </button>
+                    <label for="tabsizeInput" style="margin-left: 18px"
+                        >Tab Size:</label
+                    >
+                    <input
+                        type="number"
+                        id="tabsizeInput"
+                        min="1"
+                        max="8"
+                        step="1"
+                        value="4"
+                        style="width: 48px; margin-left: 6px"
+                    />
                 </div>
                 <button id="settingsCloseBtn">Close</button>
             </div>
