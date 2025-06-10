@@ -157,27 +157,58 @@ function closeTab(id) {
     }
 }
 
-// 줄 번호 표시 기능
+// 줄 번호 표시 기능 (줄 번호를 textarea 내부에 가상으로 표시)
 function updateLineNumbers() {
     const textarea = document.querySelector('.code-input');
-    const linenumDiv = document.getElementById('editorLinenum');
-    if (!textarea || !linenumDiv) return;
+    if (!textarea) return;
+    // 줄 번호를 위한 배경 레이어가 없으면 생성
+    let linenumLayer = textarea.parentElement.querySelector('.linenum-layer');
+    if (!linenumLayer) {
+        linenumLayer = document.createElement('div');
+        linenumLayer.className = 'linenum-layer';
+        linenumLayer.style.position = 'absolute';
+        linenumLayer.style.left = '0';
+        linenumLayer.style.top = '0';
+        linenumLayer.style.bottom = '0';
+        linenumLayer.style.width = '36px'; // 더 좁은 줄 번호 영역 너비
+        linenumLayer.style.overflow = 'hidden';
+        linenumLayer.style.background = 'transparent';
+        linenumLayer.style.color = '#888';
+        linenumLayer.style.textAlign = 'right';
+        linenumLayer.style.padding = '2px 4px 2px 0'; // 오른쪽 4px로 코드와 거의 붙게
+        linenumLayer.style.pointerEvents = 'none';
+        linenumLayer.style.userSelect = 'none';
+        linenumLayer.style.lineHeight = window.getComputedStyle(textarea).lineHeight;
+        linenumLayer.style.zIndex = '2';
+        textarea.parentElement.style.position = 'relative';
+        textarea.parentElement.insertBefore(linenumLayer, textarea);
+        textarea.style.position = 'relative';
+        textarea.style.zIndex = '3';
+        textarea.style.paddingLeft = '22px'; // 줄 번호 영역과 정확히 일치
+        textarea.style.paddingTop = '2px';
+        textarea.style.paddingBottom = '2px';
+        textarea.style.paddingRight = '0';
+        textarea.style.margin = '0';
+    }
+    // 줄 번호 생성
     const lines = textarea.value.split('\n').length;
-    // 커서 위치 줄 계산
+    let nums = '';
     let activeLine = 1;
     if (typeof textarea.selectionStart === 'number') {
         const uptoCursor = textarea.value.slice(0, textarea.selectionStart);
         activeLine = uptoCursor.split('\n').length;
     }
-    let nums = '';
     for (let i = 1; i <= lines; i++) {
         if (i === activeLine) {
-            nums += `<span class='active-linenum'>${i}</span>\n`;
+            nums += `<div style='color:#fff;font-weight:bold;display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
         } else {
-            nums += i + '\n';
+            nums += `<div style='display:flex;justify-content:flex-end;align-items:center;font-size:0.85em;'>${i}</div>`;
         }
     }
-    linenumDiv.innerHTML = nums;
+    linenumLayer.innerHTML = nums;
+    // 스크롤 동기화
+    linenumLayer.scrollTop = textarea.scrollTop;
+    linenumLayer.style.height = textarea.clientHeight + 'px';
 }
 
 const codeInput = document.querySelector('.code-input');
@@ -188,7 +219,8 @@ codeInput.addEventListener('input', () => {
     isDirty = true; // 코드 입력 시 더티 플래그 설정
 });
 codeInput.addEventListener('scroll', function() {
-    document.getElementById('editorLinenum').scrollTop = codeInput.scrollTop;
+    const linenumLayer = codeInput.parentElement.querySelector('.linenum-layer');
+    if (linenumLayer) linenumLayer.scrollTop = codeInput.scrollTop;
 });
 codeInput.addEventListener('click', updateLineNumbers);
 codeInput.addEventListener('keyup', updateLineNumbers);
@@ -256,7 +288,29 @@ document.getElementById('menuToggleBtn').addEventListener('click', function() {
 // Settings(설정) 모달 열기/닫기 및 배경색 변경
 const settingsMenu = document.getElementById('settingsMenu');
 const settingsModal = document.getElementById('settingsModal');
-const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+// close 버튼 삭제, x 버튼 생성
+let settingsCloseBtn = document.getElementById('settingsCloseBtn');
+if (settingsCloseBtn) settingsCloseBtn.remove();
+
+// x 버튼 생성 및 스타일 적용
+const closeX = document.createElement('button');
+closeX.innerHTML = '&times;';
+closeX.setAttribute('aria-label', 'Close');
+closeX.style.position = 'absolute';
+closeX.style.top = '16px';
+closeX.style.right = '20px';
+closeX.style.background = 'none';
+closeX.style.border = 'none';
+closeX.style.color = '#fff';
+closeX.style.fontSize = '2rem';
+closeX.style.cursor = 'pointer';
+closeX.style.zIndex = '10';
+closeX.id = 'settingsModalCloseX';
+settingsModal.appendChild(closeX);
+closeX.addEventListener('click', function() {
+    settingsModal.style.display = 'none';
+});
+
 const bgRadios = document.getElementsByName('bgcolor');
 const fontRadios = document.getElementsByName('fontsize');
 const fontsizeInput = document.getElementById('fontsizeInput');
@@ -276,9 +330,6 @@ settingsMenu.addEventListener('click', function() {
     let curFont = codeInput ? codeInput.style.fontSize.replace('px','') : '14';
     if (!curFont) curFont = window.getComputedStyle(codeInput).fontSize.replace('px','');
     fontsizeInput.value = curFont;
-});
-settingsCloseBtn.addEventListener('click', function() {
-    settingsModal.style.display = 'none';
 });
 settingsModal.addEventListener('click', function(e) {
     if (e.target === settingsModal) settingsModal.style.display = 'none';
@@ -320,7 +371,5 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('beforeunload', function(e) {
     if (isDirty) {
         e.preventDefault();
-        e.returnValue = '만약 변경 사항이 있는데 페이지 새로 고침 되거나 탭이 닫히면 종료하시겠습니까? 변경 사항이 저장되지 않을 수 있습니다.';
-        return e.returnValue;
     }
 });
