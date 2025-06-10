@@ -248,7 +248,12 @@ filenameInput.addEventListener('input', () => {
 });
 
 const openFileMenu = document.getElementById('openFileMenu');
-openFileMenu.addEventListener('click', function() {
+openFileMenu.addEventListener('click', openFileHandler);
+
+const openFileToolbarBtn = document.getElementById('openFileToolbarBtn');
+if (openFileToolbarBtn) openFileToolbarBtn.addEventListener('click', openFileHandler);
+
+function openFileHandler() {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.koa'; // .koa 파일만 열기
@@ -268,7 +273,7 @@ openFileMenu.addEventListener('click', function() {
     });
     input.click();
     setTimeout(() => document.body.removeChild(input), 1000);
-});
+}
 
 const newFileMenu = document.getElementById('newFileMenu');
 newFileMenu.addEventListener('click', function() {
