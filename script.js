@@ -1,13 +1,11 @@
 document.getElementById('runButton').addEventListener('click', function() {
-    // 실행 기능 미구현
 });
 
 document.getElementById('saveButton').addEventListener('click', function() {
     const code = document.querySelector('.code-input').value;
     let filename = document.getElementById('filenameInput').value.trim();
-    // 확장자 .txt 제거 후, 뒤에만 .txt 붙이기
     if (filename === '') filename = 'untitled1';
-    filename = filename.replace(/\.[^/.]+$/, ''); // 마지막 .xxx 확장자 제거
+    filename = filename.replace(/\.[^/.]+$/, '');
     filename += '.txt';
 
     const blob = new Blob([code], {type: 'text/plain'});
@@ -25,14 +23,12 @@ document.getElementById('saveButton').addEventListener('click', function() {
 });
 
 document.getElementById('stopButton').addEventListener('click', function() {
-    // 정지 기능 미구현
 });
 
 document.getElementById('githubButton').addEventListener('click', function() {
     window.open('https://github.com/', '_blank');
 });
 
-// 탭 관리 로직
 let tabs = [];
 let activeTabId = null;
 
@@ -59,7 +55,49 @@ function renderTabs() {
     tabs.forEach(tab => {
         const tabEl = document.createElement('div');
         tabEl.className = 'tab' + (tab.id === activeTabId ? ' active' : '');
-        tabEl.textContent = tab.filename;
+        // 탭 이름 영역
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = tab.filename;
+        nameSpan.style.flex = '1';
+        if (tab.id === activeTabId) {
+            nameSpan.style.cursor = 'pointer';
+            nameSpan.onclick = (e) => {
+                e.stopPropagation();
+                // 인라인 입력창으로 변경 (배경 검정, 텍스트 흰색, 기존 박스 스타일 제거)
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = tab.filename;
+                input.style.background = '#000';
+                input.style.color = '#fff';
+                input.style.border = 'none';
+                input.style.outline = 'none';
+                input.style.fontFamily = 'inherit';
+                input.style.fontSize = '15px';
+                input.style.padding = '2px 6px';
+                input.style.borderRadius = '4px';
+                input.style.width = Math.max(60, tab.filename.length * 9) + 'px';
+                nameSpan.replaceWith(input);
+                input.focus();
+                input.select();
+                input.onblur = input.onkeydown = function(ev) {
+                    if (ev.type === 'blur' || ev.key === 'Enter') {
+                        let newName = input.value.trim() || 'untitled';
+                        // 중복 방지
+                        let base = newName, num = 1;
+                        while (tabs.some(t => t.filename === newName && t.id !== tab.id)) {
+                            newName = base + '_' + num;
+                            num++;
+                        }
+                        tab.filename = newName;
+                        document.getElementById('filenameInput').value = newName;
+                        renderTabs();
+                    } else if (ev.key === 'Escape') {
+                        renderTabs();
+                    }
+                };
+            };
+        }
+        tabEl.appendChild(nameSpan);
         // 닫기 버튼
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close-btn';
@@ -101,7 +139,6 @@ function closeTab(id) {
             if (tabs.length > 0) {
                 setActiveTab(tabs[Math.max(0, idx - 1)].id);
             } else {
-                // 마지막 탭 닫으면 새 탭 생성
                 createTab('untitled1', '');
             }
         } else {
@@ -110,12 +147,27 @@ function closeTab(id) {
     }
 }
 
-// 코드/파일명 변경 시 탭 데이터 동기화
+// 줄 번호 표시 기능
+function updateLineNumbers() {
+    const textarea = document.querySelector('.code-input');
+    const linenumDiv = document.getElementById('editorLinenum');
+    if (!textarea || !linenumDiv) return;
+    const lines = textarea.value.split('\n').length;
+    let nums = '';
+    for (let i = 1; i <= lines; i++) {
+        nums += i + '\n';
+    }
+    linenumDiv.textContent = nums;
+}
+
 const codeInput = document.querySelector('.code-input');
-const filenameInput = document.getElementById('filenameInput');
 codeInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
     if (tab) tab.content = codeInput.value;
+    updateLineNumbers();
+});
+codeInput.addEventListener('scroll', function() {
+    document.getElementById('editorLinenum').scrollTop = codeInput.scrollTop;
 });
 filenameInput.addEventListener('input', () => {
     const tab = tabs.find(t => t.id === activeTabId);
@@ -123,7 +175,6 @@ filenameInput.addEventListener('input', () => {
     renderTabs();
 });
 
-// Open File 기능
 const openFileMenu = document.getElementById('openFileMenu');
 openFileMenu.addEventListener('click', function() {
     const input = document.createElement('input');
@@ -144,7 +195,6 @@ openFileMenu.addEventListener('click', function() {
     setTimeout(() => document.body.removeChild(input), 1000);
 });
 
-// New File 기능
 const newFileMenu = document.getElementById('newFileMenu');
 newFileMenu.addEventListener('click', function() {
     let untitledNum = 1;
@@ -156,7 +206,6 @@ newFileMenu.addEventListener('click', function() {
     createTab(name, '');
 });
 
-// + 버튼으로 새 탭 추가
 const tabAddBtn = document.getElementById('tabAddBtn');
 tabAddBtn.addEventListener('click', function() {
     let untitledNum = 1;
@@ -168,7 +217,18 @@ tabAddBtn.addEventListener('click', function() {
     createTab(name, '');
 });
 
-// 최초 탭 생성
+document.getElementById('menuToggleBtn').addEventListener('click', function() {
+    const sideMenu = document.querySelector('.side-menu');
+    const editorArea = document.querySelector('.editor-area');
+    sideMenu.classList.toggle('open');
+    if (sideMenu.classList.contains('open')) {
+        editorArea.style.marginLeft = '210px';
+    } else {
+        editorArea.style.marginLeft = '0';
+    }
+});
+
 window.addEventListener('DOMContentLoaded', () => {
+    updateLineNumbers();
     if (tabs.length === 0) createTab('untitled1', '');
 });

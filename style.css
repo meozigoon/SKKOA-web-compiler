@@ -28,6 +28,61 @@ body {
     padding: 0;
     min-width: 160px;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Malgun Gothic', '맑은 고딕', monospace;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(.4,1.2,.4,1);
+}
+
+.side-menu.open {
+    transform: translateX(0);
+    box-shadow: 2px 0 16px 0 rgba(0,0,0,0.18);
+}
+
+.menu-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    margin-left: -8px; /* 더 왼쪽으로 이동 */
+    padding: 0;
+    outline: none;
+}
+
+.menu-bar {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: #bfc6e0;
+    margin: 3px 0;
+    border-radius: 2px;
+    transition: background 0.18s;
+}
+
+.menu-toggle-btn:hover .menu-bar {
+    background: #4e73fa;
+}
+
+.editor-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 0;
+    margin-left: 0;
+    transition: margin-left 0.28s cubic-bezier(.4,1.2,.4,1);
+}
+
+.side-menu.open ~ .editor-area {
+    margin-left: 210px;
 }
 
 .menu-title {
@@ -72,19 +127,33 @@ body {
 .editor-toolbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start; /* 왼쪽 정렬 */
     padding: 0 36px;
     background: #161829;
     border-bottom: 2px solid #24273a;
-    height: 64px;
-    min-height: 64px;
+    height: 44px;
+    min-height: 44px;
     z-index: 2;
+    gap: 0;
 }
 
 .toolbar-left {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+}
+
+.editor-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-left: 8px; /* SKKOA 텍스트와 버튼 사이 약간의 여백 */
+}
+
+.filename-input {
+    display: none !important;
 }
 
 .editor-main {
@@ -93,10 +162,33 @@ body {
     flex-direction: column;
     height: 100%;
     min-height: 0;
-    background: #181926;
+    background: #121212;
     border-radius: 0 0 18px 18px;
     /* 탭과 에디터 연결 */
     border-top: none;
+}
+
+.editor-linenum-wrap {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    background: #121212;
+    border-radius: 0 0 18px 18px;
+}
+
+.editor-linenum {
+    background: #181926;
+    color: #6c738a;
+    font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    font-size: 17px; /* 코드 입력과 동일하게 */
+    text-align: right;
+    padding: 28px 8px 28px 0;
+    user-select: none;
+    min-width: 36px;
+    border-radius: 0 0 0 18px;
+    line-height: 1.6; /* 코드 입력과 동일하게 */
+    white-space: pre;
+    height: 100%;
 }
 
 .code-input {
@@ -110,35 +202,41 @@ body {
     font-size: 17px;
     line-height: 1.6;
     padding: 28px 30px;
-    background: #181926;
+    background: #121212 !important;
     color: #f5f5fa;
     box-sizing: border-box;
-    border-radius: 0 0 18px 18px;
+    border-radius: 0 0 18px 0;
     flex: 1;
+    /* 왼쪽 줄번호 영역만큼 여백 */
+    margin-left: 0;
 }
 
-.code-input:focus {
-    background: #1c1d2b;
+.editor-linenum-wrap:focus-within .editor-linenum {
+    background: #23263a;
 }
 
 .lang-badge {
-    font-size: 17px;
+    font-size: 14px; /* 기존 17px → 14px */
     font-weight: 600;
     color: #fff;
     letter-spacing: 2px;
-    padding: 6px 19px;
+    padding: 3px 12px; /* 패딩 축소 */
     background: #1e2130;
     border-radius: 8px;
     border: 1.2px solid #393a55;
     box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     user-select: none;
+    height: 26px;
+    display: flex;
+    align-items: center;
 }
 
 .editor-actions {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 8px; /* gap을 줄임 */
+    justify-content: flex-start; /* 왼쪽 정렬로 변경 */
 }
 
 .icon-btn {
@@ -146,21 +244,21 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 50%;
-    padding: 8px;
+    padding: 4px; /* 기존 8px → 4px */
     display: flex;
     align-items: center;
     transition: box-shadow 0.18s, transform 0.13s;
     position: relative;
     box-shadow: 0 2px 8px 0 rgba(40,80,255,0.14);
-}
-
-.icon-btn:hover {
-    box-shadow: 0 6px 22px 0 rgba(78,115,250,0.24);
-    transform: translateY(-2px) scale(1.08);
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
 }
 
 .icon-btn svg {
-    display: block;
+    width: 20px;
+    height: 20px;
 }
 
 .tooltip {
@@ -188,35 +286,17 @@ body {
     opacity: 1;
 }
 
-.filename-input {
-    background: #181926;
-    color: #f5f5fa;
-    border: 1px solid #32334a;
-    border-radius: 6px;
-    padding: 5px 13px;
-    font-size: 15px;
-    font-family: 'Fira Mono', 'Consolas', monospace;
-    width: 130px;
-    margin-left: 7px;
-    outline: none;
-    transition: border 0.15s, background 0.15s;
-}
-
-.filename-input:focus {
-    background: #23263a;
-    border: 1.2px solid #4e73fa;
-}
-
 .tab-bar {
     display: flex;
     align-items: flex-end;
     background: #181926;
     border-bottom: 1.5px solid #23263a;
     padding: 0 8px 0 16px;
-    height: 38px;
-    min-height: 38px;
+    height: 32px; /* 탭바 높이도 살짝 줄임 */
+    min-height: 32px;
     gap: 2px;
     overflow-x: auto;
+    overflow-y: hidden; /* 추가: 세로 스크롤 방지 */
     /* 탭과 에디터 연결 */
     position: relative;
     z-index: 10;
@@ -225,17 +305,18 @@ body {
 .tab {
     display: flex;
     align-items: center;
-    background: #23263a;
+    background: #121212;
     color: #bfc6e0;
-    font-size: 15px;
-    padding: 0 18px;
-    height: 32px;
+    font-size: 13px; /* 탭 폰트 사이즈 축소 */
+    padding: 0 12px; /* 패딩 축소 */
+    height: 26px; /* 탭 높이 축소 */
     border-radius: 8px 8px 0 0;
     margin-right: 4px;
     cursor: pointer;
-    border: none;
+    border: 1.5px solid #23263a;
+    border-bottom: none;
     outline: none;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.15s, color 0.15s, border 0.15s;
     position: relative;
     font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Malgun Gothic', '맑은 고딕', monospace;
     opacity: 0.7;
@@ -248,6 +329,7 @@ body {
     font-weight: bold;
     z-index: 2;
     opacity: 1;
+    border: 2px solid #4e73fa;
     border-bottom: 2px solid #161829;
 }
 
@@ -271,9 +353,9 @@ body {
     color: #bfc6e0;
     border: none;
     border-radius: 8px 8px 0 0;
-    width: 36px;
-    height: 32px;
-    font-size: 22px;
+    height: 26px;
+    width: 28px;
+    font-size: 18px;
     font-weight: bold;
     margin-left: 2px;
     cursor: pointer;
