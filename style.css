@@ -275,15 +275,16 @@ body {
     font-size: 14px;
     padding: 7px 18px;
     border-radius: 9px;
-    position: absolute;
-    bottom: -46px;
+    position: absolute; /* fixed → absolute로 변경 */
     left: 50%;
-    transform: translateX(-50%);
+    top: 100%; /* 버튼 바로 아래 */
+    bottom: auto;
+    transform: translateX(-50%) translateY(8px); /* 버튼 아래로 8px 띄움 */
     pointer-events: none;
     transition: opacity 0.18s;
     white-space: nowrap;
     font-family: 'Segoe UI', 'Fira Mono', monospace;
-    z-index: 99999; /* z-index를 크게 설정하여 항상 맨 앞으로 */
+    z-index: 2147483647;
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
@@ -444,6 +445,11 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
+.settings-fontsize-options label {
+    margin-right: 18px;
+    font-size: 16px;
+    cursor: pointer;
+}
 #settingsCloseBtn {
     background: #4e73fa;
     color: #fff;
@@ -497,4 +503,28 @@ body.bg-purple .editor-linenum {
 
 .tab-bar, .tab, .tab-add-btn {
     z-index: 10;
+}
+
+#fontsizeInput {
+    width: 60px;
+    font-size: 15px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    border: 1px solid #393a55;
+    background: #23263a;
+    color: #fff;
+    margin-right: 6px;
+}
+#fontsizeToggleBtn {
+    background: #393a55;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+#fontsizeToggleBtn:hover {
+    background: #4e73fa;
 }

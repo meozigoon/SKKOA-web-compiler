@@ -26,7 +26,7 @@ document.getElementById('stopButton').addEventListener('click', function() {
 });
 
 document.getElementById('githubButton').addEventListener('click', function() {
-    window.open('https://github.com/', '_blank');
+    window.open('https://github.com/Team-ToyoTech', '_blank');
 });
 
 let tabs = [];
@@ -249,6 +249,9 @@ const settingsMenu = document.getElementById('settingsMenu');
 const settingsModal = document.getElementById('settingsModal');
 const settingsCloseBtn = document.getElementById('settingsCloseBtn');
 const bgRadios = document.getElementsByName('bgcolor');
+const fontRadios = document.getElementsByName('fontsize');
+const fontsizeInput = document.getElementById('fontsizeInput');
+const fontsizeToggleBtn = document.getElementById('fontsizeToggleBtn');
 
 settingsMenu.addEventListener('click', function() {
     settingsModal.style.display = 'flex';
@@ -258,6 +261,12 @@ settingsMenu.addEventListener('click', function() {
     if (body.classList.contains('bg-white')) val = 'white';
     else if (body.classList.contains('bg-purple')) val = 'purple';
     for (const r of bgRadios) r.checked = (r.value === val);
+
+    // 현재 코드 입력창 폰트 크기 반영
+    const codeInput = document.querySelector('.code-input');
+    let curFont = codeInput ? codeInput.style.fontSize.replace('px','') : '14';
+    if (!curFont) curFont = window.getComputedStyle(codeInput).fontSize.replace('px','');
+    fontsizeInput.value = curFont;
 });
 settingsCloseBtn.addEventListener('click', function() {
     settingsModal.style.display = 'none';
@@ -274,6 +283,25 @@ for (const radio of bgRadios) {
         // 기본은 아무 클래스도 없음
     });
 }
+
+for (const radio of fontRadios) {
+    radio.addEventListener('change', function() {
+        const size = this.value + 'px';
+        document.querySelector('.code-input').style.fontSize = size;
+        document.getElementById('editorLinenum').style.fontSize = size;
+    });
+}
+
+fontsizeToggleBtn.addEventListener('click', function() {
+    let size = parseInt(fontsizeInput.value, 10);
+    if (isNaN(size) || size < 10) size = 10;
+    if (size > 32) size = 32;
+    document.querySelector('.code-input').style.fontSize = size + 'px';
+    document.getElementById('editorLinenum').style.fontSize = size + 'px';
+});
+fontsizeInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') fontsizeToggleBtn.click();
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     updateLineNumbers();
