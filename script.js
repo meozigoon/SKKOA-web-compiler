@@ -322,13 +322,19 @@ const fontsizeToggleBtn = document.getElementById('fontsizeToggleBtn');
 let tabSize = 4;
 
 const tabsizeInput = document.getElementById('tabsizeInput');
+const tabsizeToggleBtn = document.getElementById('tabsizeToggleBtn');
 if (tabsizeInput) {
     tabsizeInput.value = tabSize;
-    tabsizeInput.addEventListener('change', function() {
+    function applyTabSize() {
         let val = parseInt(tabsizeInput.value, 10);
         if (isNaN(val) || val < 1 || val > 8) val = 4;
         tabSize = val;
         tabsizeInput.value = tabSize;
+    }
+    tabsizeInput.addEventListener('change', applyTabSize);
+    if (tabsizeToggleBtn) tabsizeToggleBtn.addEventListener('click', applyTabSize);
+    tabsizeInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') applyTabSize();
     });
 }
 
