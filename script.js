@@ -418,8 +418,8 @@ document.getElementById('stopMenu').addEventListener('click', function() {
 document.getElementById('saveMenu').addEventListener('click', function() {
 });
 
-document.getElementById('langBadge').addEventListener('click', function() {
-    const studyMenu = document.getElementById('studyMenu');
+document.getElementById("langBadge").addEventListener("click", function () {
+    const studyMenu = document.getElementById("studyMenu");
     if (studyMenu) {
         studyMenu.click();
     }
