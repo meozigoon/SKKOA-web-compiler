@@ -52,7 +52,7 @@
                             <span class="menu-bar"></span>
                             <span class="menu-bar"></span>
                         </button>
-                        <span class="lang-badge">SKKOA</span>
+                        <span class="lang-badge" id="langBadge">SKKOA</span>
                         <div class="editor-actions">
                             <button
                                 class="icon-btn"
@@ -304,3 +304,11 @@
         <script src="script.js"></script>
     </body>
 </html>
+<script>
+    document.getElementById("langBadge").addEventListener("click", function () {
+        const studyMenu = document.getElementById("studyMenu");
+        if (studyMenu) {
+            studyMenu.click();
+        }
+    });
+</script>
