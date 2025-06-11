@@ -610,3 +610,12 @@ body.bg-purple .editor-linenum {
     scrollbar-width: auto;
     scrollbar-color: #444 #232323;
 }
+
+.icon-btn#githubButton,
+.icon-btn#settingsToolbarBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    border: none;
+}
