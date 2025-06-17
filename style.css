@@ -1,0 +1,82 @@
+body {
+    background: #18181c;
+    color: #e0e0f0;
+    font-family: Arial, "Segoe UI", "Malgun Gothic", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3 {
+    color: #fff;
+    font-family: Arial, "Segoe UI", "Malgun Gothic", sans-serif;
+}
+
+button {
+    background: linear-gradient(90deg, #7c1fff 0%, #a259ff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0003;
+    cursor: pointer;
+    transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    margin: 0;
+    font-family: Arial, "Segoe UI", "Malgun Gothic", sans-serif;
+    font-size: 1.1rem;
+    padding: 6px 32px;
+    flex: 1 1 0;
+    min-width: 90px;
+}
+button:hover {
+    background: linear-gradient(90deg, #a259ff 0%, #7c1fff 100%);
+}
+
+section {
+    background: #23232a;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0005;
+    padding: 24px;
+    margin: 40px auto;
+    max-width: 700px;
+}
+
+pre {
+    background: #1a1a2f;
+    color: #e0e0f0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 1rem;
+}
+
+a {
+    color: #a259ff;
+    text-decoration: underline;
+}
+
+ul {
+    list-style: disc inside;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+:root {
+    --button-width: 180px;
+}
+
+.button-row button {
+    flex: 0 0 var(--button-width);
+    width: var(--button-width);
+    min-width: 0;
+    margin: 0;
+}
+
+/* 기타 커스텀 스타일은 필요시 추가 */
