@@ -6,11 +6,93 @@ body {
     padding: 0;
 }
 
-h1,
-h2,
-h3 {
+:root {
+    --button-width: 180px;
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #23232a 70%, #2d1a3a 100%);
+    padding: 20px 40px 16px 40px;
+    border-bottom: 1px solid #222;
+    box-shadow: 0 2px 8px #0002;
+    gap: 24px;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #fff1;
+    box-shadow: 0 2px 8px #0002;
+}
+.header-text h1 {
+    font-size: 2.1rem;
+    margin: 0 0 2px 0;
     color: #fff;
-    font-family: Arial, "Segoe UI", "Malgun Gothic", sans-serif;
+    letter-spacing: 1px;
+}
+.header-text p {
+    font-size: 1rem;
+    color: #bdbdf6;
+    margin: 0;
+    letter-spacing: 0.2px;
+}
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.nav-link {
+    color: #bdbdf6;
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+}
+.nav-link:hover {
+    background: #2d1a3a;
+    color: #fff;
+}
+
+.download-section {
+    background: linear-gradient(90deg, #23232a 60%, #2d1a3a 100%);
+    padding: 40px 0 24px 0;
+    text-align: center;
+    box-shadow: 0 2px 8px #0003;
+}
+.download-section h2 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    color: #fff;
+}
+.download-desc {
+    color: #bdbdf6;
+    margin-top: 18px;
+    font-size: 1.1rem;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+.button-row button {
+    flex: 0 0 var(--button-width);
+    width: var(--button-width);
+    min-width: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 button {
@@ -24,24 +106,30 @@ button {
     display: block;
     margin: 0;
     font-family: Arial, "Segoe UI", "Malgun Gothic", sans-serif;
-    font-size: 1.1rem;
     padding: 6px 32px;
-    flex: 1 1 0;
-    min-width: 90px;
 }
 button:hover {
     background: linear-gradient(90deg, #a259ff 0%, #7c1fff 100%);
 }
 
-section {
+.intro-section {
     background: #23232a;
     border-radius: 12px;
     box-shadow: 0 2px 8px #0005;
-    padding: 24px;
-    margin: 40px auto;
+    padding: 32px 24px 32px 24px;
+    margin: 40px auto 0 auto;
     max-width: 700px;
+    text-align: left;
 }
-
+.intro-section h2 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+.feature-list {
+    margin: 18px 0 18px 0;
+    color: #bdbdf6;
+}
 pre {
     background: #1a1a2f;
     color: #e0e0f0;
@@ -52,31 +140,14 @@ pre {
     font-size: 1rem;
 }
 
-a {
-    color: #a259ff;
-    text-decoration: underline;
-}
-
-ul {
-    list-style: disc inside;
-}
-
-.button-row {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 32px;
-}
-
-:root {
-    --button-width: 180px;
-}
-
-.button-row button {
-    flex: 0 0 var(--button-width);
-    width: var(--button-width);
-    min-width: 0;
-    margin: 0;
+.main-footer {
+    text-align: center;
+    color: #bdbdf6;
+    font-size: 0.95rem;
+    padding: 24px 0 16px 0;
+    margin-top: 48px;
+    border-top: 1px solid #222;
+    background: #18181c;
 }
 
 /* 기타 커스텀 스타일은 필요시 추가 */

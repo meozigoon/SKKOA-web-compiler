@@ -8,38 +8,64 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <div style="text-align: center">
-            <h1>SKKOA; LTW</h1>
-            <h2>Starter Kit with Korean Oriented Architecture</h2>
-            <h3>Language To Write</h3>
-        </div>
-        <div class="button-row">
-            <button onclick="window.open('/compiler', '_blank')">
-                <p>Online Compiler</p>
-            </button>
-            <button type="button" id="download-btn">Download Compiler</button>
-        </div>
-        <section>
-            <h2>SKKOA 언어 소개</h2>
-            <p>
-                SKKOA는 한국어 친화적 문법과 직관적인 구조를 갖춘 신개념
-                프로그래밍 언어입니다.<br />
-                누구나 쉽게 배울 수 있도록 설계되었으며, 교육 및 실습에
-                최적화되어 있습니다.
-            </p>
-            <h3>주요 특징</h3>
-            <ul>
-                <li>한국어 기반의 명령어와 문법</li>
-                <li>간결하고 읽기 쉬운 코드</li>
-                <li>웹 기반 컴파일러 지원</li>
-                <li>초보자와 교육용에 적합</li>
-            </ul>
-            <h3>예시 코드</h3>
-            <pre>
-                예시 코드 작성...
-            </pre>
-            <p style="margin-top: 24px">SKKOA로 문자 코딩을 시작해보세요!</p>
-        </section>
+        <header class="main-header">
+            <div class="header-left">
+                <img
+                    src="image/ToyoTech_Logo_forTab.png"
+                    alt="SKKOA Logo"
+                    class="logo"
+                />
+                <div class="header-text">
+                    <h1>SKKOA</h1>
+                    <p>Starter Kit with Korean Oriented Architecture</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="#" class="nav-link">Docs</a>
+                <a href="#" class="nav-link">GitHub</a>
+            </nav>
+        </header>
+        <main>
+            <section class="download-section">
+                <h2>SKKOA 다운로드</h2>
+                <div class="button-row">
+                    <button onclick="window.open('/compiler', '_blank')">
+                        Online Compiler
+                    </button>
+                    <button type="button" id="download-btn">
+                        Download Compiler
+                    </button>
+                </div>
+                <p class="download-desc">
+                    SKKOA를 지금 시작해보세요. 웹에서 바로 실행하거나 컴파일러를
+                    다운로드할 수 있습니다.
+                </p>
+            </section>
+            <section class="intro-section">
+                <h2>SKKOA란?</h2>
+                <p>
+                    SKKOA는 한국어 친화적 문법과 직관적인 구조를 갖춘 신개념
+                    프로그래밍 언어입니다.<br />
+                    누구나 쉽게 배울 수 있도록 설계되었으며, 교육 및 실습에
+                    최적화되어 있습니다.
+                </p>
+                <ul class="feature-list">
+                    <li>한국어 기반의 명령어와 문법</li>
+                    <li>간결하고 읽기 쉬운 코드</li>
+                    <li>웹 기반 컴파일러 지원</li>
+                    <li>초보자와 교육용에 적합</li>
+                </ul>
+                <h3>예시 코드</h3>
+                <pre>
+시작
+    출력 "안녕하세요, SKKOA!"
+끝</pre
+                >
+            </section>
+        </main>
+        <footer class="main-footer">
+            <p>© 2025 SKKOA. Inspired by Visual Studio Code.</p>
+        </footer>
         <script>
             document
                 .getElementById("download-btn")
